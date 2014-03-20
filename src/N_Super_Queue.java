@@ -1,7 +1,7 @@
 import java.lang.reflect.Array;
 import java.lang.reflect.InvocationTargetException;
 import java.util.Queue;
-import java.util.Random;
+import java.util.concurrent.ThreadLocalRandom;
 
 // -------------------------------------------------------------------------
 /**
@@ -12,9 +12,9 @@ import java.util.Random;
  */
 public class N_Super_Queue<E>
 {
-    Queue[] superQueue;
-    int     size;
-    Random  rand = new Random();
+    Queue[]                   superQueue;
+    int                       size;
+    private ThreadLocalRandom localRandom;
 
 
     @SuppressWarnings("unchecked")
@@ -53,14 +53,14 @@ public class N_Super_Queue<E>
         InvocationTargetException,
         InstantiationException
     {
-        int value = rand.nextInt(size);
+        int value = localRandom.current().nextInt(size);
         superQueue[value].add(item);
     }
 
 
     public void dequeue()
     {
-        int value = rand.nextInt(size);
+        int value = localRandom.current().nextInt(size);
         superQueue[value].remove();
     }
 }

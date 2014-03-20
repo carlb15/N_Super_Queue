@@ -32,7 +32,7 @@ class LockBasedQueue<V>
         head = 0;
         tail = 0;
         lock = new ReentrantLock();
-        items = (V[])new Object[10];
+        items = (V[])new Object[50000];
     }
 
 
@@ -53,16 +53,16 @@ class LockBasedQueue<V>
             }
             items[tail % items.length] = x;
             tail++;
+            return true;
         }
         catch (FullException ex)
         {
-            // ex.printStackTrace();
+            return false;
         }
         finally
         {
             lock.unlock();
         }
-        return false;
     }
 
 
@@ -85,14 +85,12 @@ class LockBasedQueue<V>
         }
         catch (EmptyException ex)
         {
-            // ex.printStackTrace();
+            return null;
         }
         finally
         {
             lock.unlock();
         }
-
-        return null;
     }
 
 

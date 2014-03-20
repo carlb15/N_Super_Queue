@@ -1,24 +1,21 @@
-import java.util.NoSuchElementException;
 import java.lang.reflect.InvocationTargetException;
+import java.util.NoSuchElementException;
 import java.util.Random;
 
 /**
- * @author Mohamed M. Saad
+ * @author Carl Barbee
  */
 public class TestThread
     extends Thread
 {
-    private static int             ID_GEN        = 0;
-    private static final int       MAX_COUNT     = 1000;
+    private static int             ID_GEN    = 0;
+    private static final int       MAX_COUNT = 1000;
 
     private N_Super_Queue<Integer> n_super_queue;
     private static int             MAXTHREADCOUNT;
-    private static int             counter       = 0;
-    private static int             threadCounter = 0;
-
+    private int                    counter   = 0;
     private int                    id;
-    Random                         chooseMethod  = new Random();
-    Random                         item          = new Random();
+    private Random                 random    = new Random();
 
 
     // ----------------------------------------------------------
@@ -41,8 +38,8 @@ public class TestThread
     @Override
     public void run()
     {
-        threadCounter++;
         long startTime = System.currentTimeMillis();
+        int methodChosen, itemToAdd;
 
         while (System.currentTimeMillis() - startTime < 5000)
             ;
@@ -53,9 +50,8 @@ public class TestThread
         {
             for (int i = 0; i < 1000; i++)
             {
-
-                int methodChosen = chooseMethod.nextInt(1);
-                int itemToAdd = item.nextInt(100);
+                methodChosen = random.nextInt(2);
+                itemToAdd = random.nextInt(100);
 
                 if (methodChosen == 1)
                 {
@@ -78,15 +74,25 @@ public class TestThread
                     }
                     catch (NoSuchElementException e)
                     {
-                        // e.printStackTrace();
+                        return;
                     }
                 }
+
                 counter++;
             }
         }
+    }
 
-        System.out.println("Number of Operations/Duration of Measurement: "
-            + counter / 2);
+
+    // ----------------------------------------------------------
+    /**
+     * Get the counter for the thread.
+     *
+     * @return counter the number of operations performed by the thread.
+     */
+    public int getCounter()
+    {
+        return counter;
     }
 
 
