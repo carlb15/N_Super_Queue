@@ -42,15 +42,14 @@ public class TestThread
     public void run()
     {
         threadCounter++;
+        long startTime = System.currentTimeMillis();
 
-        long startTime = System.nanoTime();
-
-        while (System.nanoTime() - startTime < 5e9)
+        while (System.currentTimeMillis() - startTime < 5000)
             ;
 
-        startTime = System.nanoTime();
+        startTime = System.currentTimeMillis();
 
-        while (System.nanoTime() - startTime < 2e9)
+        while (System.currentTimeMillis() - startTime < 2000)
         {
             for (int i = 0; i < 1000; i++)
             {
@@ -79,7 +78,7 @@ public class TestThread
                     }
                     catch (NoSuchElementException e)
                     {
-                        //e.printStackTrace();
+                        // e.printStackTrace();
                     }
                 }
                 counter++;
@@ -88,7 +87,6 @@ public class TestThread
 
         System.out.println("Number of Operations/Duration of Measurement: "
             + counter / 2);
-
     }
 
 
